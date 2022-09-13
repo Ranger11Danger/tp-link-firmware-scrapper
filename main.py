@@ -11,9 +11,10 @@ router_list = soup.find("div", {"data-class" : "wi-fi-routers"}).find_all("a")
 
 for router in router_list:
     data = requests.get(f"https://www.tp-link.com{router['href']}").text
-    soup = BeautifulSoup(data, 'html.parser').find('a', {'class' : 'download-resource-btn'})
+    soup = BeautifulSoup(data, 'html.parser').find_all('a', {'class' : 'download-resource-btn'})
     try:
-        if 'firmware' in soup['href']:
-            print(soup['href'])
+        for link in soup:
+            if 'firmware' in link['href']:
+                print(link['href'])
     except:
         pass
